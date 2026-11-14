@@ -9,7 +9,7 @@ function load(): PaymentLink[] {
     if (!raw) return mockPaymentLinks;
     const parsed = JSON.parse(raw) as PaymentLink[];
     if (!Array.isArray(parsed)) return mockPaymentLinks;
-    return parsed.map((l) => ({ allowPartial: false, amountPaid: l.status === 'Paid' ? l.amount : (l.amountPaid ?? 0), ...l }));
+    return parsed.map((l) => { const r = l as unknown as Record<string, unknown>; const amount = typeof r.amount === 'number' ? r.amount : 0; const st = r.status === 'Paid' ? 'Paid' as const : 'Active' as const; return { id: String(r.id ?? ''), amount, description: String(r.description ?? ''), customerEmail: typeof r.customerEmail === 'string' ? r.customerEmail : undefined, customerPhone: typeof r.customerPhone === 'string' ? r.customerPhone : undefined, status: st, paymentUrl: String(r.paymentUrl ?? ''), createdAt: String(r.createdAt ?? new Date().toISOString()), expiryDate: typeof r.expiryDate === 'string' ? r.expiryDate : null, allowPartial: r.allowPartial === true, minFirstPayment: typeof r.minFirstPayment === 'number' ? r.minFirstPayment : undefined, amountPaid: typeof r.amountPaid === 'number' ? r.amountPaid : (st === 'Paid' ? amount : 0) } as PaymentLink; });
   } catch { return mockPaymentLinks; }
 }
 export function usePaymentLinks() {

@@ -8,6 +8,8 @@ const initialForm: PaymentFormData = {
   customerEmail: '',
   customerPhone: '',
   expiryDate: '',
+  allowPartial: false,
+  minFirstPayment: '',
 };
 
 export default function PaymentLinkForm({
@@ -34,7 +36,7 @@ export default function PaymentLinkForm({
     e.preventDefault();
     const validation = validatePaymentForm(form, Date.now());
     setErrors(validation);
-    setTouched({ amount: true, description: true, customerEmail: true, customerPhone: true, expiryDate: true });
+    setTouched({ amount: true, description: true, customerEmail: true, customerPhone: true, expiryDate: true, minFirstPayment: true });
     if (Object.keys(validation).length > 0) return;
     onCreate(form);
     onSuccess(form.description.trim());
@@ -190,6 +192,20 @@ export default function PaymentLinkForm({
           </p>
         )}
 
+
+        <div className="md:col-span-2 rounded-lg border border-neutral-200 bg-[#f4f4f4] p-3">
+          <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700">
+            <input id="allowPartial" name="allowPartial" type="checkbox" checked={form.allowPartial} onChange={(e) => setForm((p) => ({ ...p, allowPartial: e.target.checked }))} className="h-4 w-4 accent-[#0a2540]" />
+            Allow partial payments
+          </label>
+          {form.allowPartial && (
+            <div className="mt-2">
+              <label htmlFor="minFirstPayment" className="block text-sm font-medium text-slate-700">Minimum first payment (INR) <span aria-hidden="true" className="text-red-600">*</span></label>
+              <input id="minFirstPayment" name="minFirstPayment" type="text" inputMode="decimal" placeholder="e.g. 500.00" autoComplete="off" value={form.minFirstPayment} onChange={(e) => set('minFirstPayment', e.target.value)} onBlur={() => handleBlur('minFirstPayment')} aria-invalid={Boolean(errors.minFirstPayment)} aria-describedby={errors.minFirstPayment ? 'min-error' : undefined} className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]" />
+              {errors.minFirstPayment && (<p id="min-error" role="alert" className="mt-1 text-xs text-red-600">{errors.minFirstPayment}</p>)}
+            </div>
+          )}
+        </div>
         <div className="md:col-span-2">
           <button
             type="submit"

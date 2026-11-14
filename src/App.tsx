@@ -10,7 +10,7 @@ import Toast from "./components/Toast";
 import { usePaymentLinks } from "./hooks/usePaymentLinks";
 import type { PaymentFormData } from "./types/payment";
 export default function App() {
-  const { filteredLinks, counts, filter, setFilter, createPaymentLink } = usePaymentLinks();
+  const { filteredLinks, counts, filter, setFilter, createPaymentLink, recordPayment } = usePaymentLinks();
   const [showForm, setShowForm] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [sideOpen, setSideOpen] = useState(false);
@@ -41,14 +41,14 @@ export default function App() {
         </header>
         <main id="main-content" className="mx-auto max-w-6xl space-y-4 px-4 py-5 sm:px-6">
           <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)]"><DashboardHeader onCreate={handleCreateClick} /></div>
-          <SummaryCards total={counts.total} active={counts.active} paid={counts.paid} expired={counts.expired} />
+          <SummaryCards total={counts.total} active={counts.active} partially={counts.partially} paid={counts.paid} expired={counts.expired} />
           <div ref={formRef} className="scroll-mt-20">{showForm && <PaymentLinkForm onCreate={handleCreate} onSuccess={handleSuccess} />}</div>
           <section aria-label="Payment links list" className="rounded-xl border border-neutral-200 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.05)] sm:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-[15px] font-bold tracking-tight">All Payment Links ({filteredLinks.length})</h2>
               <StatusFilters active={filter} onChange={setFilter} />
             </div>
-            <div className="mt-4">{filteredLinks.length === 0 ? (<EmptyState filter={filter} />) : (<PaymentLinksTable links={filteredLinks} />)}</div>
+            <div className="mt-4">{filteredLinks.length === 0 ? (<EmptyState filter={filter} />) : (<PaymentLinksTable links={filteredLinks} onRecordPayment={(id, amt) => { recordPayment(id, amt); setToast('Payment of ' + amt + ' recorded'); window.clearTimeout(toastTimer.current); toastTimer.current = window.setTimeout(() => setToast(null), 4000); }} />)}</div>
           </section>
           <footer className="pt-1 text-center text-xs text-neutral-500">Mock dashboard - data stored in memory only.</footer>
         </main>

@@ -28,6 +28,8 @@ describe('customer contact validation', () => {
       customerEmail: '',
       customerPhone: '',
       expiryDate: '',
+      allowPartial: false,
+      minFirstPayment: '',
     });
     expect(errors.customerContact).toBe('Customer email or phone is required');
   });
@@ -38,6 +40,8 @@ describe('customer contact validation', () => {
       customerEmail: 'a@b.com',
       customerPhone: '',
       expiryDate: '',
+      allowPartial: false,
+      minFirstPayment: '',
     });
     expect(errors.customerContact).toBeUndefined();
     expect(errors.customerEmail).toBeUndefined();
@@ -52,3 +56,18 @@ describe('customer contact validation', () => {
     expect(validatePhone('9812345678')).toBeUndefined();
   });
 });
+
+describe('partial payment validation', () => {
+  it('requires min first payment when allowed', async () => {
+    const m = await import('./validation');
+    expect(m.validateMinFirstPayment('', '1000', true)).toContain('required');
+    expect(m.validateMinFirstPayment('0', '1000', true)).toContain('greater than zero');
+    expect(m.validateMinFirstPayment('1500', '1000', true)).toContain('cannot exceed');
+    expect(m.validateMinFirstPayment('500', '1000', true)).toBeUndefined();
+    expect(m.validateMinFirstPayment('', '1000', false)).toBeUndefined();
+    expect(m.validateRecordPayment('0', 500)).toContain('greater than zero');
+    expect(m.validateRecordPayment('600', 500)).toContain('cannot exceed due');
+    expect(m.validateRecordPayment('200', 500)).toBeUndefined();
+  });
+});
+
