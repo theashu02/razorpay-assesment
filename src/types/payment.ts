@@ -1,4 +1,4 @@
-﻿export type PaymentStatus = 'Active' | 'Paid' | 'Expired';
+export type PaymentStatus = 'Active' | 'Partially paid' | 'Paid' | 'Expired';
 export type StoredStatus = 'Active' | 'Paid';
 export type StatusFilter = 'All' | PaymentStatus;
 export interface PaymentLink {
@@ -11,6 +11,9 @@ export interface PaymentLink {
   paymentUrl: string;
   createdAt: string;
   expiryDate?: string | null;
+  allowPartial: boolean;
+  minFirstPayment?: number;
+  amountPaid: number;
 }
 export interface PaymentFormData {
   amount: string;
@@ -18,6 +21,8 @@ export interface PaymentFormData {
   customerEmail: string;
   customerPhone: string;
   expiryDate: string;
+  allowPartial: boolean;
+  minFirstPayment: string;
 }
 export interface PaymentFormErrors {
   amount?: string;
@@ -26,4 +31,5 @@ export interface PaymentFormErrors {
   customerPhone?: string;
   customerContact?: string;
   expiryDate?: string;
+  minFirstPayment?: string;
 }

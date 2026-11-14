@@ -75,6 +75,8 @@ export function validatePaymentForm(data: PaymentFormData, now: number = Date.no
     errors.customerContact = 'Customer email or phone is required';
   }
 
+  const minErr = validateMinFirstPayment(data.minFirstPayment, data.amount, data.allowPartial);
+  if (minErr) errors.minFirstPayment = minErr;
   const expiryError = validateExpiry(data.expiryDate, now);
   if (expiryError) errors.expiryDate = expiryError;
 
@@ -83,4 +85,25 @@ export function validatePaymentForm(data: PaymentFormData, now: number = Date.no
 
 export function isFormValid(errors: PaymentFormErrors): boolean {
   return Object.keys(errors).length === 0;
+}
+
+export function validateMinFirstPayment(raw: string, amountRaw: string, allowPartial: boolean): string | undefined {
+  if (!allowPartial) return undefined;
+  const value = raw.trim();
+  if (!value) return 'Minimum first payment is required when partial payments are allowed';
+  if (!/^\d+(\.\d{1,2})?$/.test(value)) return 'Enter a valid amount';
+  const num = Number(value);
+  const amt = Number(amountRaw);
+  if (!Number.isFinite(num) || num <= 0) return 'Minimum first payment must be greater than zero';
+  if (Number.isFinite(amt) && amt > 0 && num > amt) return 'Minimum first payment cannot exceed amount';
+  return undefined;
+}
+export function validateRecordPayment(raw: string, due: number): string | undefined {
+  const value = raw.trim();
+  if (!value) return 'Enter a payment amount';
+  if (!/^\d+(\.\d{1,2})?$/.test(value)) return 'Enter a valid amount';
+  const num = Number(value);
+  if (!Number.isFinite(num) || num <= 0) return 'Amount must be greater than zero';
+  if (num - due > 0.009) return 'Amount cannot exceed due (\u20B9' + due.toFixed(2) + ')';
+  return undefined;
 }
