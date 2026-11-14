@@ -12,7 +12,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
   return (
     <>
       {open && <button aria-label="Close menu" onClick={onClose} className="fixed inset-0 z-40 bg-black/50 lg:hidden" />}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[248px] -translate-x-full flex-col bg-black text-white transition-transform lg:static lg:z-auto lg:translate-x-0 ${open ? "translate-x-0" : ""}`} aria-label="Sidebar">
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[248px] -translate-x-full flex-col bg-black text-white transition-transform lg:sticky lg:top-0 lg:h-screen lg:shrink-0 lg:z-auto lg:translate-x-0 ${open ? "translate-x-0" : ""}`} aria-label="Sidebar">
         <div className="flex items-center gap-2.5 px-5 pb-5 pt-5">
           <div aria-hidden="true" className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a2540] text-base font-bold ring-1 ring-white/20">R</div>
           <div>
@@ -21,7 +21,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
           </div>
           <button type="button" onClick={onClose} aria-label="Close sidebar" className="ml-auto rounded p-1.5 text-white/60 hover:bg-white/10 lg:hidden">✕</button>
         </div>
-        <nav className="flex-1 space-y-6 overflow-y-auto px-3" aria-label="Dashboard">
+        <nav className="flex-1 space-y-6 overflow-y-auto lg:overflow-y-auto px-3" aria-label="Dashboard">
           <div>
             <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">Overview</p>
             <ul className="space-y-1">

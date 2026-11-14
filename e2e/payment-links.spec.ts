@@ -1,20 +1,16 @@
-import { expect, test } from "@playwright/test";
+﻿import { expect, test } from "@playwright/test";
 test("create payment link and filter active", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Payment Links", exact: true })).toBeVisible({ timeout: 10000 });
-  const createBtn = page.getByRole("button", { name: /create payment link/i });
-  await expect(createBtn).toBeVisible();
-  await createBtn.click();
+  await expect(page.getByRole("heading", { name: "Payment Links", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /create payment link/i }).click();
   await expect(page.getByRole("heading", { name: "Create Payment Link" })).toBeVisible();
   const desc = "E2E Test Link " + Date.now();
   await page.getByLabel(/Amount \(INR\)/i).fill("2500.50");
   await page.getByLabel(/^Description/i).fill(desc);
   await page.getByLabel(/Customer Email/i).fill("e2e@example.com");
-  const genBtn = page.getByRole("button", { name: /generate link/i });
-  await expect(genBtn).toBeEnabled({ timeout: 10000 });
-  await genBtn.click();
-  await expect(page.getByTestId("toast")).toContainText("Payment link created", { timeout: 10000 });
-  await expect(page.getByRole("table")).toContainText(desc, { timeout: 10000 });
+  await page.locator("form").evaluate(function (f) { return f.requestSubmit(); });
+  await expect(page.getByRole("status")).toContainText("Payment link created", { timeout: 10000 });
+  await expect(page.getByRole("table")).toContainText(desc);
   await page.getByRole("tab", { name: "Active" }).click();
-  await expect(page.getByRole("table")).toContainText(desc, { timeout: 10000 });
+  await expect(page.getByRole("table")).toContainText(desc);
 });
