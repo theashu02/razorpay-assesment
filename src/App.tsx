@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+﻿import { useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import DashboardHeader from "./components/DashboardHeader";
 import SummaryCards from "./components/SummaryCards";
@@ -24,13 +24,13 @@ export default function App() {
   }
   function handleCreateClick() {
     setShowForm((s) => !s);
-    requestAnimationFrame(() => { formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); });
+    requestAnimationFrame(() => { formRef.current?.scrollIntoView({ behavior: "auto", block: "start" }); });
   }
   return (
-    <div className="min-h-screen bg-[#f4f4f4] text-black lg:flex">
+    <div className="min-h-screen bg-[#f4f4f4] text-black lg:flex lg:h-screen lg:overflow-hidden">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm">Skip to content</a>
       <Sidebar open={sideOpen} onClose={() => setSideOpen(false)} />
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 lg:h-screen lg:overflow-y-auto">
         <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur">
           <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
             <button type="button" onClick={() => setSideOpen(true)} aria-label="Open menu" className="rounded-lg border border-neutral-200 p-2 hover:bg-neutral-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0a2540] lg:hidden">\u2630</button>
@@ -57,3 +57,6 @@ export default function App() {
     </div>
   );
 }
+
+
+
