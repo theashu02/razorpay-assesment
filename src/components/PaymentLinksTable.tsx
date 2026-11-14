@@ -26,8 +26,8 @@ export default function PaymentLinksTable({ links, onRecordPayment }: { links: P
     setOpenId(null); setPayValue(''); setPayError(null);
   }
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <div className="overflow-x-auto">
+    <div className="min-w-0 max-w-full overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="relative max-w-full overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
           <thead className="bg-[#f4f4f4]">
             <tr>
@@ -68,7 +68,7 @@ export default function PaymentLinksTable({ links, onRecordPayment }: { links: P
                           <label htmlFor={'pay-' + link.id} className="sr-only">Payment amount for {link.id}</label>
                           <input id={'pay-' + link.id} type="text" inputMode="decimal" value={payValue} onChange={(e) => setPayValue(e.target.value)} placeholder="0.00" className="w-24 rounded-md border border-slate-300 px-2 py-1 text-sm focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-[#0a2540]" />
                           <button type="button" onClick={() => submitRecord(link)} className="rounded-md bg-[#0a2540] px-2.5 py-1 text-xs font-medium text-white hover:bg-[#133a6b] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0a2540]">Save</button>
-                          <button type="button" onClick={() => setOpenId(null)} aria-label="Cancel recording payment" className="rounded-md px-2 py-1 text-xs text-slate-500 hover:bg-slate-100">✕</button>
+                          <button type="button" onClick={() => setOpenId(null)} aria-label="Cancel recording payment" className="rounded-md px-2 py-1 text-xs text-slate-500 hover:bg-slate-100">Ã¢Å“â€¢</button>
                         </div>
                       ) : (
                         <button type="button" onClick={() => startRecord(link)} className="rounded-md border border-neutral-300 px-2.5 py-1 text-xs font-medium text-black hover:bg-neutral-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0a2540]">Record payment</button>

@@ -15,7 +15,7 @@ function load(): PaymentLink[] {
 export function usePaymentLinks() {
   const [links, setLinks] = useState<PaymentLink[]>(() => (typeof window === 'undefined' ? mockPaymentLinks : load()));
   const [filter, setFilter] = useState<StatusFilter>('All');
-  useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(links)); } catch {} }, [links]);
+  useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(links)); } catch { /* storage unavailable in this browser */ } }, [links]);
   const counts = useMemo(() => getStatusCounts(links), [links]);
   const filteredLinks = useMemo(() => filterLinksByStatus(links, filter), [links, filter]);
   function createPaymentLink(data: PaymentFormData) {
