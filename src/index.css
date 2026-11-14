@@ -1,3 +1,7 @@
 ﻿@import "tailwindcss";
-html { font-family: ui-sans-serif, system-ui, sans-serif; }
-body { margin: 0; background: #f8fafc; }
+:root { color-scheme: light; }
+html { font-family: "Ubuntu", ui-sans-serif, system-ui, sans-serif; }
+body { margin: 0; background: #f4f4f4; color: #0a0a0a; font-family: "Ubuntu", ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+::selection { background: #0a2540; color: #fff; }
+input, textarea, select, button { font-family: inherit; }
+table { font-variant-numeric: tabular-nums; }

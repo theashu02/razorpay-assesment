@@ -66,14 +66,14 @@ export default function PaymentLinkForm({
               name="amount"
               type="text"
               inputMode="decimal"
-              placeholder="e.g. 2500.00"
+              placeholder="e.g. 2500.00 (max 5,00,000)"
               autoComplete="off"
               value={form.amount}
               onChange={(e) => set('amount', e.target.value)}
               onBlur={() => handleBlur('amount')}
               aria-invalid={Boolean(errors.amount && show('amount'))}
               aria-describedby={errors.amount ? 'amount-error' : undefined}
-              className="w-full rounded-md border border-slate-300 py-2 pl-8 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+              className="w-full rounded-md border border-slate-300 py-2 pl-8 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
           </div>
           {errors.amount && show('amount') && (
@@ -96,7 +96,7 @@ export default function PaymentLinkForm({
             onBlur={() => handleBlur('expiryDate')}
             aria-invalid={Boolean(errors.expiryDate)}
             aria-describedby={errors.expiryDate ? 'expiry-error' : undefined}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
           {errors.expiryDate && (
             <p id="expiry-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -120,7 +120,7 @@ export default function PaymentLinkForm({
             onBlur={() => handleBlur('description')}
             aria-invalid={Boolean(errors.description)}
             aria-describedby="desc-hint desc-error"
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
           <div className="mt-1 flex items-center justify-between">
             <div>
@@ -151,7 +151,7 @@ export default function PaymentLinkForm({
             onBlur={() => handleBlur('customerEmail')}
             aria-invalid={Boolean(errors.customerEmail)}
             aria-describedby={errors.customerEmail ? 'email-error' : undefined}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
           {errors.customerEmail && (
             <p id="email-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -175,7 +175,7 @@ export default function PaymentLinkForm({
             onBlur={() => handleBlur('customerPhone')}
             aria-invalid={Boolean(errors.customerPhone)}
             aria-describedby={errors.customerPhone ? 'phone-error' : undefined}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#0a2540] focus:outline-none focus:ring-1 focus:ring-blue-600"
           />
           {errors.customerPhone && (
             <p id="phone-error" role="alert" className="mt-1 text-xs text-red-600">
@@ -193,7 +193,7 @@ export default function PaymentLinkForm({
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-md bg-[#0a2540] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#133a6b] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0a2540] focus-visible:ring-offset-2 sm:w-auto"
           >
             Generate Link
           </button>

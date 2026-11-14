@@ -1,6 +1,6 @@
 ﻿import type { PaymentFormData, PaymentFormErrors } from '../types/payment';
 
-export const MAX_AMOUNT = 5000000;
+export const MAX_AMOUNT = 500000;
 export const MAX_DESCRIPTION_LENGTH = 100;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,7 +17,7 @@ export function validateAmount(raw: string): string | undefined {
   const num = Number(value);
   if (!Number.isFinite(num)) return 'Enter a valid amount';
   if (num <= 0) return 'Amount must be greater than zero';
-  if (num > MAX_AMOUNT) return 'Amount cannot exceed \u20B950,00,000';
+  if (num > MAX_AMOUNT) return 'Amount cannot exceed \u20B95,00,000';
   return undefined;
 }
 

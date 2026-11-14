@@ -21,7 +21,7 @@ export default function StatusFilters({
             onClick={() => onChange(t)}
             className={`rounded-full px-4 py-1.5 text-sm font-medium ring-1 ring-inset focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
               selected
-                ? 'bg-slate-900 text-white ring-slate-900'
+                ? 'bg-black text-white ring-black'
                 : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >

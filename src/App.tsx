@@ -1,12 +1,13 @@
-﻿import { useRef, useState } from 'react';
-import DashboardHeader from './components/DashboardHeader';
-import SummaryCards from './components/SummaryCards';
-import PaymentLinkForm from './components/PaymentLinkForm';
-import PaymentLinksTable from './components/PaymentLinksTable';
-import StatusFilters from './components/StatusFilters';
-import EmptyState from './components/EmptyState';
-import { usePaymentLinks } from './hooks/usePaymentLinks';
-import type { PaymentFormData } from './types/payment';
+import { useRef, useState } from "react";
+import DashboardHeader from "./components/DashboardHeader";
+import SummaryCards from "./components/SummaryCards";
+import PaymentLinkForm from "./components/PaymentLinkForm";
+import PaymentLinksTable from "./components/PaymentLinksTable";
+import StatusFilters from "./components/StatusFilters";
+import EmptyState from "./components/EmptyState";
+import Toast from "./components/Toast";
+import { usePaymentLinks } from "./hooks/usePaymentLinks";
+import type { PaymentFormData } from "./types/payment";
 export default function App() {
   const { filteredLinks, counts, filter, setFilter, createPaymentLink } = usePaymentLinks();
   const [showForm, setShowForm] = useState(false);
@@ -15,64 +16,56 @@ export default function App() {
   const toastTimer = useRef<number | undefined>(undefined);
   function handleCreate(data: PaymentFormData) {
     createPaymentLink(data);
-    setFilter('All');
+    setFilter("All");
   }
   function handleSuccess(desc: string) {
-    setToast(`Payment link created for "${desc}"`);
+    const msg = "Payment link created for " + desc;
+    setToast(msg);
     window.clearTimeout(toastTimer.current);
     toastTimer.current = window.setTimeout(() => setToast(null), 4000);
   }
   function handleCreateClick() {
     setShowForm((s) => !s);
-    requestAnimationFrame(() => {
-      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    requestAnimationFrame(() => { formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }); });
   }
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm">
-        Skip to content
-      </a>
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen bg-[#f4f4f4] text-black">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm">Skip to content</a>
+      <header className="bg-black text-white">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
-          <div aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded bg-blue-600 text-sm font-bold text-white">R</div>
+          <div aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-md bg-[#0a2540] text-sm font-bold text-white ring-1 ring-white/20">R</div>
           <div>
-            <p className="text-sm font-semibold leading-none">Razorpay</p>
-            <p className="text-xs text-slate-500">Merchant Dashboard</p>
+            <p className="text-sm font-bold leading-none tracking-tight">Razorpay</p>
+            <p className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-white/60">Merchant Dashboard</p>
           </div>
-          <nav aria-label="Primary" className="ml-6 hidden gap-4 text-sm text-slate-600 md:flex">
-            <span className="font-medium text-slate-900">Payment Links</span>
-            <span>Payments</span>
-            <span>Customers</span>
+          <nav aria-label="Primary" className="ml-8 hidden gap-1 text-sm md:flex">
+            <span className="rounded-md bg-white px-3 py-1.5 font-medium text-black">Payment Links</span>
+            <span className="rounded-md px-3 py-1.5 text-white/70 hover:bg-white/10 hover:text-white">Payments</span>
+            <span className="rounded-md px-3 py-1.5 text-white/70 hover:bg-white/10 hover:text-white">Customers</span>
           </nav>
         </div>
+        <div className="h-1 bg-[#0a2540]" aria-hidden="true" />
       </header>
-      <main id="main-content" className="mx-auto max-w-6xl space-y-5 px-4 py-6 sm:px-6">
-        <DashboardHeader onCreate={handleCreateClick} />
+      <main id="main-content" className="mx-auto max-w-6xl space-y-4 px-4 py-6 sm:px-6">
+        <div className="rounded-xl border border-neutral-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+          <DashboardHeader onCreate={handleCreateClick} />
+        </div>
         <SummaryCards total={counts.total} active={counts.active} paid={counts.paid} expired={counts.expired} />
-        {toast && (
-          <div role="status" aria-live="polite" className="rounded-md border border-green-200 bg-green-50 px-4 py-2.5 text-sm text-green-800">
-            {toast}
-          </div>
-        )}
         <div ref={formRef}>
           {showForm && <PaymentLinkForm onCreate={handleCreate} onSuccess={handleSuccess} />}
         </div>
-        <section aria-label="Payment links list" className="space-y-3">
+        <section aria-label="Payment links list" className="rounded-xl border border-neutral-200 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.05)] sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-base font-semibold">All Payment Links ({filteredLinks.length})</h2>
+            <h2 className="text-[15px] font-bold tracking-tight">All Payment Links ({filteredLinks.length})</h2>
             <StatusFilters active={filter} onChange={setFilter} />
           </div>
-          {filteredLinks.length === 0 ? (
-            <EmptyState filter={filter} />
-          ) : (
-            <PaymentLinksTable links={filteredLinks} />
-          )}
+          <div className="mt-4">
+            {filteredLinks.length === 0 ? (<EmptyState filter={filter} />) : (<PaymentLinksTable links={filteredLinks} />)}
+          </div>
         </section>
-        <footer className="pt-4 text-center text-xs text-slate-500">
-          Mock dashboard for assessment - data is stored in memory only.
-        </footer>
+        <footer className="pt-2 text-center text-xs text-neutral-500">Mock dashboard - data is stored in memory only.</footer>
       </main>
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
 }

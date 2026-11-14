@@ -12,12 +12,12 @@ describe('payment amount validation', () => {
     expect(validateAmount('10.123')).toBe('Amount can have maximum 2 decimal places');
   });
   it('rejects amount above max', () => {
-    expect(validateAmount('5000001')).toContain('cannot exceed');
+    expect(validateAmount('500001')).toContain('cannot exceed');
   });
   it('accepts valid amounts', () => {
     expect(validateAmount('1')).toBeUndefined();
     expect(validateAmount('2500.50')).toBeUndefined();
-    expect(validateAmount('5000000')).toBeUndefined();
+    expect(validateAmount('500000')).toBeUndefined();
   });
 });
 describe('customer contact validation', () => {

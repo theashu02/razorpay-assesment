@@ -14,7 +14,7 @@ export default function PaymentLinksTable({ links }: { links: PaymentLink[] }) {
     <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
-          <thead className="bg-slate-50">
+          <thead className="bg-[#f4f4f4]">
             <tr>
               <th scope="col" className="px-4 py-3 font-medium text-slate-600">Payment Link ID</th>
               <th scope="col" className="px-4 py-3 font-medium text-slate-600">Amount</th>
@@ -29,7 +29,7 @@ export default function PaymentLinksTable({ links }: { links: PaymentLink[] }) {
             {links.map((link) => {
               const effective = getEffectiveStatus(link);
               return (
-                <tr key={link.id} className="hover:bg-slate-50/60">
+                <tr key={link.id} className="hover:bg-[#f4f4f4]/60">
                   <td className="whitespace-nowrap px-4 py-3">
                     <div className="font-mono text-xs text-slate-900">{link.id}</div>
                     <a
