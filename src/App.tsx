@@ -53,7 +53,7 @@ export default function App() {
           <footer className="pt-1 text-center text-xs text-neutral-500">Mock dashboard - data stored in memory only.</footer>
         </main>
       </div>
-      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
+      {toast ? <Toast message={toast} onClose={() => setToast(null)} /> : <div role="status" aria-live="polite" className="sr-only">Ready</div>}
     </div>
   );
 }
